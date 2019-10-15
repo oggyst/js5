@@ -12,8 +12,10 @@ function run(max, min) {
         let intArrayAverage = 0;
         let intSmallest = 10000;
         let intBiggest = 0;
+        let counter= 0;
+        let doOnce = true;
         let intBiggestIndexI, intBiggestIndexJ, intSmallestIndexI, intSmallestIndexJ;
-        document.write('<style>td{border:1px solid black;}</style><table><tr><td></td>');
+        document.write('<style>table{margin-bottom:45px;}td{border:1px solid black;}</style><table><tr><td></td>');
         for (var i = 0; i < intNumberOfColumns; i++) {
             arrRowNumbers[i] = (Math.floor(Math.random() * (max - min)) + min);
             intArrayAverage = intArrayAverage + arrRowNumbers[i];
@@ -30,7 +32,14 @@ function run(max, min) {
             arrMatrix[i] = [];
             for(var j=0;j<intNumberOfRows; j++)
             {
+                if(doOnce)
+                {
+                    document.write ('<tr><td>' + arrRowNumbers[counter]+ '</td>');
+                    counter++;
+                    doOnce = false;
+                }
                 arrMatrix[i][j] = arrRowNumbers[i] * arrColumnNumbers[j];
+                document.write('<td>' + arrMatrix[i][j] + '</td>');
                 if (arrMatrix[i][j] > intBiggest) 
                 {
                     intBiggest = arrMatrix[i][j];
@@ -44,24 +53,28 @@ function run(max, min) {
                 intSmallestIndexJ = j;
                 }
             }
-            arrMatrix[intSmallestIndexI][intSmallestIndexJ] = intBiggest;
-            arrMatrix[intBiggestIndexI][intBiggestIndexJ] = intSmallest;
+            document.write('</tr>');
+            
+            doOnce = true;
         }
+        arrMatrix[intSmallestIndexI][intSmallestIndexJ] = intBiggest;
+        arrMatrix[intBiggestIndexI][intBiggestIndexJ] = intSmallest;
         
-        document.write('</tr>');
+        document.write('</table><table>');
+        document.write('<td></td>');
+        for (var i=0; i< arrColumnNumbers.length; i++)
+        {
+            document.write('<td>' + arrColumnNumbers[i] + '</td>');
+        }
         for (var i = 0; i < intNumberOfColumns; i++) 
         {
-            intArrayAverage = 0;
             intCounter = 0;
             document.write('<tr>')
             document.write('<td>' + arrRowNumbers[i] + '</td>');
             for (var j = 0; j < intNumberOfRows; j++) 
             {
-               
-                intArrayAverage = intArrayAverage + arrMatrix[i][j];
                 document.write('<td>' + arrMatrix[i][j] + '</td>');
             }
-            intArrayAverage = intArrayAverage / intNumberOfRows;
             document.write('</tr>');
         }
         document.write ('</table><p>Biggest number was ' + intBiggest + ' , and the smallest was ' + intSmallest + '.</p>') ;
